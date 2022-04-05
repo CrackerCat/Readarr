@@ -8,8 +8,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
-using FluentMigrator.Runner.Processors.Postgres;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -146,7 +144,7 @@ namespace NzbDrone.Host
                 })
                 .ConfigureServices(services =>
                 {
-                    services.Configure<PostgresOptions>(config.GetSection("Postgres"));
+                    services.Configure<PostgresOptions>(config.GetSection("Readarr:Postgres"));
                 })
                 .ConfigureWebHost(builder =>
                 {
@@ -220,7 +218,7 @@ namespace NzbDrone.Host
             return new ConfigurationBuilder()
                 .AddXmlFile(appFolder.GetConfigPath(), optional: true, reloadOnChange: false)
                 .AddInMemoryCollection(new List<KeyValuePair<string, string>> { new ("dataProtectionFolder", appFolder.GetDataProtectionPath()) })
-                .AddEnvironmentVariables("Readarr__")
+                .AddEnvironmentVariables()
                 .Build();
         }
 

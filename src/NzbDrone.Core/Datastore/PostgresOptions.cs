@@ -15,11 +15,11 @@ namespace NzbDrone.Core.Datastore
         public static PostgresOptions GetOptions()
         {
             var config = new ConfigurationBuilder()
-                .AddEnvironmentVariables("Readarr__")
+                .AddEnvironmentVariables()
                 .Build();
 
             var postgresOptions = new PostgresOptions();
-            config.GetSection("Postgres").Bind(postgresOptions);
+            config.GetSection("Readarr:Postgres").Bind(postgresOptions);
 
             return postgresOptions;
         }
