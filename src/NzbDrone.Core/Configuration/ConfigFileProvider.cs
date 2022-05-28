@@ -18,7 +18,7 @@ using NzbDrone.Core.Update;
 namespace NzbDrone.Core.Configuration
 {
     public interface IConfigFileProvider : IHandleAsync<ApplicationStartedEvent>,
-                                           IExecute<ResetApiKeyCommand>
+        IExecute<ResetApiKeyCommand>
     {
         Dictionary<string, object> GetConfigDictionary();
         void SaveConfigDictionary(Dictionary<string, object> configValues);
@@ -48,6 +48,13 @@ namespace NzbDrone.Core.Configuration
         string SyslogServer { get; }
         int SyslogPort { get; }
         string SyslogLevel { get; }
+        string PostgresHost { get; }
+        int PostgresPort { get; }
+        string PostgresUser { get; }
+        string PostgresPassword { get; }
+        string PostgresMainDb { get; }
+        string PostgresLogDb { get; }
+        string PostgresCacheDb { get; }
     }
 
     public class ConfigFileProvider : IConfigFileProvider
@@ -184,6 +191,13 @@ namespace NzbDrone.Core.Configuration
 
         public string LogLevel => GetValue("LogLevel", "info");
         public string ConsoleLogLevel => GetValue("ConsoleLogLevel", string.Empty, persist: false);
+        public string PostgresHost => GetValue("PostgresHost", string.Empty, persist: false);
+        public string PostgresUser => GetValue("PostgresUser", string.Empty, persist: false);
+        public string PostgresPassword => GetValue("PostgresPassword", string.Empty, persist: false);
+        public string PostgresMainDb => GetValue("PostgresMainDb", "readarr-main", persist: false);
+        public string PostgresLogDb => GetValue("PostgresLogDb", "readarr-log", persist: false);
+        public string PostgresCacheDb => GetValue("PostgresCacheDb", "readarr-cache", persist: false);
+        public int PostgresPort => GetValueInt("PostgresPort", 5432, persist: false);
         public bool LogSql => GetValueBoolean("LogSql", false, persist: false);
         public int LogRotate => GetValueInt("LogRotate", 50, persist: false);
         public bool FilterSentryEvents => GetValueBoolean("FilterSentryEvents", true, persist: false);

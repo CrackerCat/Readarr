@@ -69,7 +69,7 @@ namespace NzbDrone.Core.Books
 
         public List<Book> GetBooksByFileIds(IEnumerable<int> fileIds)
         {
-            return Query(new SqlBuilder()
+            return Query(new SqlBuilder(_database.DatabaseType)
                          .Join<Book, Edition>((b, e) => b.Id == e.BookId)
                          .Join<Edition, BookFile>((l, r) => l.Id == r.EditionId)
                          .Where<BookFile>(f => fileIds.Contains(f.Id)))

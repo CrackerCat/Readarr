@@ -25,7 +25,7 @@ namespace NzbDrone.Core.Books
         {
         }
 
-        protected override SqlBuilder Builder() => new SqlBuilder()
+        protected override SqlBuilder Builder() => new SqlBuilder(_database.DatabaseType)
             .Join<Author, AuthorMetadata>((a, m) => a.AuthorMetadataId == m.Id);
 
         protected override List<Author> Query(SqlBuilder builder) => Query(_database, builder).ToList();

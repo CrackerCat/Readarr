@@ -47,7 +47,7 @@ namespace NzbDrone.Core.Books
         {
             // populate the books and author metadata also
             // this hopefully speeds up the track matching a lot
-            var builder = new SqlBuilder()
+            var builder = new SqlBuilder(_database.DatabaseType)
                 .LeftJoin<Edition, Book>((e, b) => e.BookId == b.Id)
                 .LeftJoin<Book, AuthorMetadata>((b, a) => b.AuthorMetadataId == a.Id)
                 .Where<Edition>(r => r.BookId == id);
